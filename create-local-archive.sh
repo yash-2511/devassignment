@@ -17,10 +17,8 @@ zip -r design-system-project.zip \
     postcss.config.js \
     tailwind.config.ts \
     theme.json \
-    -x "*.git*" "*.replit*" "*replit.nix*" "*.config*" "*.cache*" "*node_modules*" "*.upm*"
+    -x "*.git*" "*.config*" "*.cache*" "*node_modules*" "*.upm*"
 
-echo "Archive created: design-system-project.zip"
-echo "This zip file contains all the necessary files for local development without Replit-specific configuration."
 
 # Instructions for local development
 echo ""
