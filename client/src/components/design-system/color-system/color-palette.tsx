@@ -30,34 +30,72 @@ export function ThemeProvider({
     () => (localStorage.getItem(storageKey) as Theme) || defaultTheme
   );
 
+  // Handle theme changes
   useEffect(() => {
     const root = window.document.documentElement;
-
+    
+    // Debug - showing current theme state
+    console.log("ThemeProvider: changing theme to", theme);
+    console.log("Current root classes:", root.classList.value);
+    
+    // First remove all theme classes
     root.classList.remove("light", "dark");
 
+    // Handle system theme preference
     if (theme === "system") {
       const systemTheme = window.matchMedia("(prefers-color-scheme: dark)")
         .matches
         ? "dark"
         : "light";
-
-      root.classList.add(systemTheme);
       
-      // Set data-theme attribute for shadcn components
+      console.log("System theme detected as:", systemTheme);
+      
+      // Apply the system theme
+      root.classList.add(systemTheme);
       root.setAttribute("data-theme", systemTheme);
       return;
     }
 
+    // Apply the explicit theme
     root.classList.add(theme);
-    // Set data-theme attribute for shadcn components
     root.setAttribute("data-theme", theme);
+    
+    // Debug - show final state
+    console.log("Applied theme classes:", root.classList.value);
   }, [theme]);
 
+  // Watch for system theme changes
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+    
+    // Define handler for system theme changes
+    const handleSystemThemeChange = () => {
+      if (theme === 'system') {
+        // If we're in system theme mode, update when system changes
+        const newSystemTheme = mediaQuery.matches ? "dark" : "light";
+        console.log("System theme changed to:", newSystemTheme);
+        
+        const root = window.document.documentElement;
+        root.classList.remove("light", "dark");
+        root.classList.add(newSystemTheme);
+        root.setAttribute("data-theme", newSystemTheme);
+      }
+    };
+    
+    // Listen for system theme changes
+    mediaQuery.addEventListener("change", handleSystemThemeChange);
+    
+    // Clean up listener
+    return () => mediaQuery.removeEventListener("change", handleSystemThemeChange);
+  }, [theme]);
+
+  // Define the context value
   const value = {
     theme,
-    setTheme: (theme: Theme) => {
-      localStorage.setItem(storageKey, theme);
-      setTheme(theme);
+    setTheme: (newTheme: Theme) => {
+      console.log("Setting new theme:", newTheme);
+      localStorage.setItem(storageKey, newTheme);
+      setTheme(newTheme);
     },
   };
 
@@ -142,11 +180,18 @@ export const ThemeToggle: React.FC<ThemeToggleProps> = ({ className }) => {
   const { theme, setTheme } = useTheme();
 
   const toggleTheme = () => {
-    const newTheme = theme === "light" ? "dark" : "light";
-    setTheme(newTheme);
+    // Check actual current theme from document.documentElement.classList
+    const isDarkMode = document.documentElement.classList.contains('dark');
+    const newTheme = isDarkMode ? "light" : "dark";
     
-    // This helps debugging - it will show in the console what theme is being set
-    console.log("Theme changed to:", newTheme);
+    // Log current state for debugging
+    console.log("Current document class:", document.documentElement.classList.value);
+    console.log("Current theme state:", theme);
+    console.log("Is dark mode active:", isDarkMode);
+    console.log("Setting new theme to:", newTheme);
+    
+    // Set the theme
+    setTheme(newTheme);
   };
 
   return (
