@@ -42,10 +42,15 @@ export function ThemeProvider({
         : "light";
 
       root.classList.add(systemTheme);
+      
+      // Set data-theme attribute for shadcn components
+      root.setAttribute("data-theme", systemTheme);
       return;
     }
 
     root.classList.add(theme);
+    // Set data-theme attribute for shadcn components
+    root.setAttribute("data-theme", theme);
   }, [theme]);
 
   const value = {
@@ -136,9 +141,17 @@ export interface ThemeToggleProps {
 export const ThemeToggle: React.FC<ThemeToggleProps> = ({ className }) => {
   const { theme, setTheme } = useTheme();
 
+  const toggleTheme = () => {
+    const newTheme = theme === "light" ? "dark" : "light";
+    setTheme(newTheme);
+    
+    // This helps debugging - it will show in the console what theme is being set
+    console.log("Theme changed to:", newTheme);
+  };
+
   return (
     <button
-      onClick={() => setTheme(theme === "light" ? "dark" : "light")}
+      onClick={toggleTheme}
       className={`p-2 rounded-full hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors ${className}`}
       aria-label="Toggle dark mode"
     >
