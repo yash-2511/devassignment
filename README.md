@@ -13,6 +13,7 @@ A comprehensive React + TypeScript design system with color tokens, data display
 - [Accessibility](#accessibility)
 - [Project Structure](#project-structure)
 - [Development](#development)
+- [Documentation](#documentation)
 - [License](#license)
 
 ## Features
@@ -215,6 +216,18 @@ npm run build
 ```
 
 This will create optimized assets in the `dist` directory.
+
+## Documentation
+
+Detailed documentation is available in the `docs/` directory:
+
+- [Getting Started Guide](docs/getting-started.md) - Installation and setup instructions
+- [Color System Documentation](docs/color-system.md) - Color tokens and usage
+- [Components Documentation](docs/components.md) - Component API references
+- [Theme System Documentation](docs/themes.md) - Theme configuration and usage
+- [Accessibility Guidelines](docs/accessibility.md) - Accessibility best practices
+
+Or browse the [Documentation Index](docs/index.md) for an overview of all documentation.
 
 ## License
 
