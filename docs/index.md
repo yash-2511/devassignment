@@ -9,8 +9,10 @@ Welcome to the Enterprise Design System documentation. This comprehensive guide 
 - [**Getting Started**](getting-started.md) - Installation and setup instructions
 - [**Color System**](color-system.md) - Color tokens, palettes, and usage guidelines
 - [**Components**](components.md) - Detailed component documentation
+- [**API Reference**](api-reference.md) - Component API specifications
 - [**Themes**](themes.md) - Light/dark theme implementation and customization
 - [**Accessibility**](accessibility.md) - Accessibility guidelines and best practices
+- [**Contributing**](contributing.md) - Guidelines for contributing to the design system
 
 ## About the Design System
 
@@ -81,12 +83,13 @@ The design system is built with:
 
 ## Contributing
 
-To contribute to the design system:
+To contribute to the design system, please refer to our [Contributing Guidelines](contributing.md) for detailed instructions on:
 
-1. Follow the component patterns established in existing components
-2. Ensure all components are accessible and work in both themes
-3. Include proper documentation for any new components
-4. Test components thoroughly across different devices and browsers
+1. Setting up the development environment
+2. Component development guidelines
+3. Coding standards and conventions
+4. Documentation requirements
+5. Pull request process
 
 ## License
 
