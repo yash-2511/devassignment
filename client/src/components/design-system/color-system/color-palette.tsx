@@ -179,19 +179,33 @@ export interface ThemeToggleProps {
 export const ThemeToggle: React.FC<ThemeToggleProps> = ({ className }) => {
   const { theme, setTheme } = useTheme();
 
+  // Simpler and more direct theme toggling
   const toggleTheme = () => {
-    // Check actual current theme from document.documentElement.classList
-    const isDarkMode = document.documentElement.classList.contains('dark');
-    const newTheme = isDarkMode ? "light" : "dark";
+    // Force a direct DOM update first
+    const root = document.documentElement;
+    const isDark = root.classList.contains('dark');
     
-    // Log current state for debugging
-    console.log("Current document class:", document.documentElement.classList.value);
-    console.log("Current theme state:", theme);
-    console.log("Is dark mode active:", isDarkMode);
-    console.log("Setting new theme to:", newTheme);
+    console.log("DIRECT TOGGLE - Current state:", isDark ? "dark" : "light");
     
-    // Set the theme
-    setTheme(newTheme);
+    // Toggle the theme directly
+    if (isDark) {
+      // Switch to light
+      root.classList.remove('dark');
+      root.classList.add('light');
+      root.setAttribute('data-theme', 'light');
+      localStorage.setItem('enterprise-ds-ui-theme', 'light');
+      console.log("DIRECT TOGGLE - Switching to light mode");
+    } else {
+      // Switch to dark
+      root.classList.remove('light');
+      root.classList.add('dark');
+      root.setAttribute('data-theme', 'dark');
+      localStorage.setItem('enterprise-ds-ui-theme', 'dark');
+      console.log("DIRECT TOGGLE - Switching to dark mode");
+    }
+    
+    // Now update React state to match
+    setTheme(isDark ? "light" : "dark");
   };
 
   return (
